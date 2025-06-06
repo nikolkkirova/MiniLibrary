@@ -1,0 +1,61 @@
+@page
+@model MiniLibrary.Pages.Books.CreateModel
+
+        @{
+        ViewData["Title"] = "Създаване";
+        }
+        
+        <h1>Създаване на книга</h1>
+        
+    @* <h4>Book</h4> *@
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+
+    @* <p><strong>UserId:</strong> @User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value</p> *@
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Book.Title" class="control-label"></label>
+                <input asp-for="Book.Title" class="form-control" />
+                <span asp-validation-for="Book.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Author" class="control-label"></label>
+                <input asp-for="Book.Author" class="form-control" />
+                <span asp-validation-for="Book.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Genre" class="control-label"></label>
+                <input asp-for="Book.Genre" class="form-control" />
+                <span asp-validation-for="Book.Genre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Status" class="control-label"></label>
+                <select asp-for="Book.Status" class="form-control"
+                        asp-items="Html.GetEnumSelectList<MiniLibrary.Models.BookStatus>()">
+                
+                    <option value="">-- Избери статус на книгата --</option>
+                </select>
+                <span asp-validation-for="Book.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Rating" class="control-label"></label>
+                <input asp-for="Book.Rating" class="form-control" type="number" min="0" max="5" />
+                <span asp-validation-for="Book.Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Създай" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-2">
+    <a asp-page="Index">Обратно към списъка</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

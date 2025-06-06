@@ -1,0 +1,80 @@
+@page
+@model MiniLibrary.Pages.Books.IndexModel
+
+
+@{
+    ViewData["Title"] = "Книги";
+}
+
+<h1>Списък с книги</h1>
+
+@* <p>Current user ID: @User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value</p>
+<p>Logged in: @User?.Identity?.IsAuthenticated</p> *@
+
+@* Търсачка на книги *@
+<form method="get" class="mb-3"> @* Връзва формата към GET заявката *@ 
+    <div class="input-group">
+        <input @* тук се въвежда текст за търсене *@
+            type="text"
+            name="SearchString"
+            value="@Model.SearchString" @* гарантира, че при повторно зареждане полето ще остане запълнено с досегашния текст *@
+            class="form-control"
+            placeholder="Търсене на книга по заглавие, aвтор или жанр" />
+        <button type="submit" class="btn btn-outline-primary"> @* бутон, който изпраща GET заявката *@
+            <i class="bi bi-search"></i>
+        </button> 
+    </div>
+</form>
+
+
+<p>
+    <a asp-page="Create">Създай нова книга</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Rating)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Books) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Редактирай</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Детайли</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Изтрий</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
